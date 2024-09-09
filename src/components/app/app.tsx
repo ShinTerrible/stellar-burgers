@@ -21,6 +21,7 @@ import { ProtectedRoute } from '../protected-route/protected-route';
 import { useDispatch } from '../../services/store';
 import { getIngredients } from '../../slices/ingredients/ingredientSlice';
 import { getUserFromApi } from '../../slices/user/userSlice';
+import { getFeeds } from '../../slices/feeds/feedSlice';
 
 const fn = () => {};
 
@@ -30,6 +31,7 @@ function App() {
   useEffect(() => {
     dispatch(getIngredients());
     dispatch(getUserFromApi());
+    dispatch(getFeeds());
   }, [dispatch]);
 
   return (
@@ -49,12 +51,19 @@ function App() {
         <Route
           path='/login'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <Login />
             </ProtectedRoute>
           }
         />
-        <Route path='/register' element={<Register />} />
+        <Route
+          path='/register'
+          element={
+            <ProtectedRoute onlyUnAuth>
+              <Register />
+            </ProtectedRoute>
+          }
+        />
         <Route path='/forgot-password' element={<ForgotPassword />} />{' '}
         <Route path='/reset-password' element={<ResetPassword />} />{' '}
         <Route path='/profile' element={<Profile />} />

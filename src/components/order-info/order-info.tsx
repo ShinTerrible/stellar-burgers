@@ -8,8 +8,20 @@ import { getOrderState } from '../../slices/order/orderSlice';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = useSelector(getOrderState).newOrderData;
-  const ingredients: TIngredient[] = useSelector(selectIngredients);
+  // const orderData = useSelector(getOrderState).newOrderData;
+  // const ingredients: TIngredient[] = useSelector(selectIngredients);
+
+  const orderData = {
+    createdAt: '',
+    ingredients: [],
+    _id: '',
+    status: '',
+    name: '',
+    updatedAt: 'string',
+    number: 0
+  };
+
+  const ingredients: TIngredient[] = [];
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {

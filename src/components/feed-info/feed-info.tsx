@@ -19,6 +19,8 @@ export const FeedInfo: FC = () => {
 
   const orders: TOrder[] = useSelector(getOrderListSelector);
   const feed = useSelector(selectState);
+  // const orders: TOrder[] = [];
+  // const feed = {};
 
   const readyOrders = getOrders(orders, 'done');
 

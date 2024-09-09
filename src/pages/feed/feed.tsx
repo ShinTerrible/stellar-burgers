@@ -8,14 +8,15 @@ import { getFeeds, selectIngredients } from '../../slices/feeds/feedSlice';
 export const Feed: FC = () => {
   /** TODO: взять переменную из стора */
   const orders: TOrder[] = useSelector(selectIngredients);
+  // const orders: TOrder[] = [];
 
   if (!orders.length) {
     return <Preloader />;
   }
 
-  const handleGetFeeds = () => {
-    // dispatch(getFeeds());
-  };
+  // const handleGetFeeds = () => {
+  //   // dispatch(getFeeds());
+  // };
 
-  return <FeedUI orders={orders} handleGetFeeds={handleGetFeeds} />;
+  return <FeedUI orders={orders} handleGetFeeds={() => {}} />;
 };
