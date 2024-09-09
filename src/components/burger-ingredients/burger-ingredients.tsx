@@ -4,11 +4,16 @@ import { useInView } from 'react-intersection-observer';
 import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
 
+import { useSelector, useDispatch } from '../../services/store';
+import { selectIngredients } from '../../slices/ingredients/ingredientSlice';
+
 export const BurgerIngredients: FC = () => {
   /** TODO: взять переменные из стора */
-  const buns = [];
-  const mains = [];
-  const sauces = [];
+  const ingredientsData = useSelector(selectIngredients);
+
+  const buns = ingredientsData.filter((e) => e.type === 'bun');
+  const mains = ingredientsData.filter((e) => e.type === 'mains');
+  const sauces = ingredientsData.filter((e) => e.type === 'sauses');
 
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
   const titleBunRef = useRef<HTMLHeadingElement>(null);
@@ -47,7 +52,7 @@ export const BurgerIngredients: FC = () => {
       titleSaucesRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  return null;
+  // return null;
 
   return (
     <BurgerIngredientsUI

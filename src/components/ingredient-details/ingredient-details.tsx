@@ -1,14 +1,11 @@
 import { FC } from 'react';
-import { Preloader } from '../ui/preloader';
 import { IngredientDetailsUI } from '../ui/ingredient-details';
+import { useSelector } from '../../services/store';
 
 export const IngredientDetails: FC = () => {
   /** TODO: взять переменную из стора */
-  const ingredientData = null;
+  /** DONE */
+  const ingredientData = useSelector((state) => state.ingredients.ingredients);
 
-  if (!ingredientData) {
-    return <Preloader />;
-  }
-
-  return <IngredientDetailsUI ingredientData={ingredientData} />;
+  return ingredientData.map((i) => <IngredientDetailsUI key={i._id} ingredientData={i} />);
 };
