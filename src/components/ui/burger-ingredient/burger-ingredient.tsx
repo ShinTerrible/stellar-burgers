@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import React, { FC, memo, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './burger-ingredient.module.css';
 
@@ -31,7 +31,7 @@ export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
         </Link>
         <AddButton
           text='Добавить'
-          onClick={handleAdd}
+          onClick={(e: SyntheticEvent) => handleAdd}
           extraClass={`${styles.addButton} mt-8`}
         />
       </li>

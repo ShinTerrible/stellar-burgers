@@ -12,12 +12,8 @@ export const BurgerIngredients: FC = () => {
   const ingredientsData = useSelector(selectIngredients);
 
   const buns = ingredientsData.filter((e) => e.type === 'bun');
-  const mains = ingredientsData.filter((e) => e.type === 'mains');
-  const sauces = ingredientsData.filter((e) => e.type === 'sauses');
-
-  // const buns = [];
-  // const mains = [];
-  // const sauces = [];
+  const mains = ingredientsData.filter((e) => e.type === 'main');
+  const sauces = ingredientsData.filter((e) => e.type === 'sauce');
 
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
   const titleBunRef = useRef<HTMLHeadingElement>(null);
@@ -56,7 +52,7 @@ export const BurgerIngredients: FC = () => {
       titleSaucesRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  return null;
+  // return null;
 
   return (
     <BurgerIngredientsUI

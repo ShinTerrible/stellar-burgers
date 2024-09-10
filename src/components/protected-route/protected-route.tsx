@@ -1,24 +1,23 @@
 import { Preloader } from '@ui';
 import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useSelector } from '../../services/store';
+import { getIsAuthChecked, getLoading } from '../../slices/user/userSlice';
 
 type ProtectedRouteProps = {
   children: React.ReactElement;
   onlyUnAuth?: boolean;
 };
 
-export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const user = useSelector((state) => state.user.data);
-  const isUserAuth = useSelector((state) => state.user.isAuthChecked);
+export const ProtectedRoute = ({
+  children,
+  onlyUnAuth
+}: ProtectedRouteProps) => {
+  const isUserAuth = useSelector(getIsAuthChecked);
 
-  if (user && isUserAuth) {
-    return <Preloader />;
-  }
+  if (onlyUnAuth && isUserAuth) return <Navigate replace to='/profile' />;
 
-  if (!user) {
-    return <Navigate to='/login' />;
-  }
+  if (!onlyUnAuth && !isUserAuth) return <Navigate replace to='/login' />;
 
   return children;
 };

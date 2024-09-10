@@ -17,7 +17,7 @@ export const feedsSlice = createSlice({
   initialState,
   reducers: {},
   selectors: {
-    selectIngredients: (state) => state.orders,
+    selectOrders: (state) => state.orders,
     selectLoading: (state) => state.isLoading,
     selectState: (state) => state
   },
@@ -45,5 +45,5 @@ export const feedsSlice = createSlice({
 
 export default feedsSlice.reducer;
 
-export const { selectIngredients, selectLoading, selectState } =
+export const { selectOrders, selectLoading, selectState } =
   feedsSlice.selectors;

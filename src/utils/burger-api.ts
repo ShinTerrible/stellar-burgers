@@ -113,7 +113,7 @@ export const getIngredientsApi = () =>
     });
 
 export const getFeedsApi = () =>
-  fetch(`${URL}`)
+  fetch(`${URL}/orders/all`)
     .then((res) => checkResponse<TFeedsResponse>(res))
     .then((data) => {
       if (data?.success) return data;
