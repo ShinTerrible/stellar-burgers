@@ -1,11 +1,10 @@
+import { SerializedError } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 
 export type TOrderState = {
-  newOrderData: TOrder | null;
-  isNewOrderDataLoading: boolean;
-  newOrderError: unknown;
-
+  orderModalData: TOrder | null;
   orderByNumber: TOrder | null;
+  orderModalDataLoading: boolean;
   isOrderByNumberLoading: boolean;
-  orderByNumberError: unknown;
+  error: SerializedError | null;
 };

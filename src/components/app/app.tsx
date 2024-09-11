@@ -20,18 +20,29 @@ import { AppHeader } from '@components';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import { useDispatch } from '../../services/store';
 import { getIngredients } from '../../slices/ingredients/ingredientSlice';
-import { checkUserAuth, getUserFromApi } from '../../slices/user/userSlice';
+import { getUserFromApi, userAction } from '../../slices/user/userSlice';
+import { getCookie } from '../../utils/cookie';
+import { ContentWithoutHistory } from '../../pages/content-without-history';
 
 function App() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const location = useLocation();
   const background = location.state?.background;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getIngredients());
     dispatch(getUserFromApi());
-    dispatch(checkUserAuth()); // запрос на проверку авторизирован ли пользователь
+    if (getCookie('accessToken')) {
+      dispatch(getUserFromApi())
+        .unwrap()
+        .finally(() => {
+          dispatch(userAction.authChecked());
+        });
+    } else {
+      dispatch(userAction.authChecked());
+    }
+    // запрос на проверку авторизирован ли пользователь
   }, [dispatch]);
 
   const onCloseModal = () => {
@@ -45,16 +56,6 @@ function App() {
       <Routes location={background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
-        {background && (
-          <Route
-            path='/feed/:number'
-            element={
-              <Modal title={''} onClose={onCloseModal}>
-                <OrderInfo />
-              </Modal>
-            }
-          />
-        )}
         <Route
           path='/login'
           element={
@@ -91,7 +92,9 @@ function App() {
           path='/profile'
           element={
             <ProtectedRoute>
-              <Profile />
+              <ContentWithoutHistory>
+                <Profile />
+              </ContentWithoutHistory>
             </ProtectedRoute>
           }
         />
@@ -103,30 +106,47 @@ function App() {
             </ProtectedRoute>
           }
         />{' '}
-        {background && (
+        <Route
+          path='/ingredients/:id'
+          element={
+            <ContentWithoutHistory>
+              <IngredientDetails />
+            </ContentWithoutHistory>
+          }
+        />
+        <Route path='*' element={<NotFound404 />} />
+      </Routes>
+
+      {background && (
+        <Routes>
+          <Route
+            path='/feed/:number'
+            element={
+              <Modal title='Детали заказа' onClose={onCloseModal}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+          <Route
+            path='/ingredients/:id'
+            element={
+              <Modal title='Детали ингредиента' onClose={onCloseModal}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
           <Route
             path='/profile/orders/:number'
             element={
               <ProtectedRoute>
-                <Modal title={''} onClose={onCloseModal}>
+                <Modal title='Детали заказа' onClose={onCloseModal}>
                   <OrderInfo />
                 </Modal>
               </ProtectedRoute>
             }
           />
-        )}
-        {background && (
-          <Route
-            path='/ingredients/:id'
-            element={
-              <Modal title={''} onClose={onCloseModal}>
-                <IngredientDetails />
-              </Modal>
-            }
-          />
-        )}
-        <Route path='*' element={<NotFound404 />} />
-      </Routes>
+        </Routes>
+      )}
     </div>
   );
 }

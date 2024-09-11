@@ -1,51 +1,74 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrderState } from './type';
-import { getOrderByNumberApi } from '@api';
+import { getOrderByNumberApi, orderBurgerApi } from '@api';
 
 const initialState: TOrderState = {
-  newOrderData: null,
-  isNewOrderDataLoading: false,
-  newOrderError: '',
-
+  orderModalData: null,
   orderByNumber: null,
+  orderModalDataLoading: false,
   isOrderByNumberLoading: false,
-  orderByNumberError: ''
+  error: null
 };
 
+//Thunks
+export const createOrderBurger = createAsyncThunk(
+  'order/createOrder',
+  orderBurgerApi
+);
+
+export const getOrderByNumber = createAsyncThunk(
+  'order/getOrderByNumber',
+  getOrderByNumberApi
+);
+
+//Slice
 export const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
     resetCreatedOrder: (state) => {
-      state.newOrderData = null;
+      state.orderModalData = null;
     }
   },
   selectors: {
-    getOrderState: (state) => state
+    getOrderRequest: (state) => state.orderModalDataLoading,
+    getOrderByNumberRequest: (state) => state.isOrderByNumberLoading,
+    getOrderByNumberSelector: (state) => state.orderByNumber,
+    getOrderModalData: (state) => state.orderModalData,
+    getOrderError: (state) => state.error
   },
   extraReducers: (builder) => {
+    //запрос заказа по номеру
     builder
       .addCase(getOrderByNumber.pending, (state) => {
         state.isOrderByNumberLoading = true;
-        state.orderByNumberError = null;
+        state.error = null;
       })
       .addCase(getOrderByNumber.fulfilled, (state, { payload }) => {
         state.orderByNumber = payload.orders[0];
         state.isOrderByNumberLoading = false;
-        state.orderByNumberError = null;
+        state.error = null;
       })
       .addCase(getOrderByNumber.rejected, (state, { error }) => {
         state.isOrderByNumberLoading = false;
-        state.orderByNumberError = error;
+        state.error = error;
       });
+    //создать заказ по номеру
+    builder.addCase(createOrderBurger.fulfilled, (state, { payload }) => {
+      state.orderModalData = payload.order;
+      state.error = null;
+    });
   }
 });
 
-const getOrderByNumber = createAsyncThunk(
-  'order/getOrderByNumber',
-  getOrderByNumberApi
-);
+export const {
+  getOrderRequest,
+  getOrderByNumberRequest,
+  getOrderByNumberSelector,
+  getOrderModalData,
+  getOrderError
+} = orderSlice.selectors;
 
-export const { getOrderState } = orderSlice.selectors;
+export const orderActions = orderSlice.actions;
 
 export default orderSlice.reducer;

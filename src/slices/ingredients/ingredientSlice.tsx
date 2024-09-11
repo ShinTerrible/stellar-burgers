@@ -8,19 +8,17 @@ const initialState: IngredientState = {
   error: null
 };
 
+//Thunk
 export const getIngredients = createAsyncThunk(
   'ingredients/getIngredients',
   getIngredientsApi
 );
 
+//Slice
 export const ingredientsSlice = createSlice({
   name: 'ingredients',
   initialState,
-  reducers: {
-    getIngred: (state, action) => {
-      console.log(state, action);
-    }
-  },
+  reducers: {},
   selectors: {
     selectIngredients: (state) => state.ingredients,
     selectLoading: (state) => state.loading

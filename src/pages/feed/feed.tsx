@@ -20,6 +20,7 @@ export const Feed: FC = () => {
   }
 
   const handleGetFeeds = () => {
+    location.assign('/feed');
     dispatch(getFeeds());
   };
 

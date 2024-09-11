@@ -10,8 +10,10 @@ const initialState: TFeedState = {
   isLoading: false
 };
 
+//Thunks
 export const getFeeds = createAsyncThunk('feeds/getFeeds', getFeedsApi);
 
+//Slice
 export const feedsSlice = createSlice({
   name: 'feed',
   initialState,

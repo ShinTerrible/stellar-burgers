@@ -8,12 +8,20 @@ const initialState: TOrderListState = {
   isLoading: false
 };
 
+//Thunk
+export const getOrderList = createAsyncThunk(
+  'orderList/getOrderList',
+  getOrdersApi
+);
+
+//Slice
 export const orderListSlice = createSlice({
   name: 'orderList',
   initialState,
   reducers: {},
   selectors: {
-    getOrderListSelector: (state) => state.orders
+    getOrderListSelector: (state) => state.orders,
+    getOrderListLoading: (state) => state.isLoading
   },
   extraReducers: (builder) => {
     builder
@@ -33,8 +41,7 @@ export const orderListSlice = createSlice({
   }
 });
 
-const getOrderList = createAsyncThunk('orderList/getOrderList', getOrdersApi);
-
-export const { getOrderListSelector } = orderListSlice.selectors;
+export const { getOrderListSelector, getOrderListLoading } =
+  orderListSlice.selectors;
 
 export default orderListSlice.reducer;
