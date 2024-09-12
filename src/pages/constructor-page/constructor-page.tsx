@@ -8,7 +8,7 @@ import { useSelector } from '../../services/store';
 import { selectLoading } from '../../slices/ingredients/ingredientSlice';
 
 export const ConstructorPage: FC = () => {
-  /** TODO: взять переменную из стора */
+
   const isIngredientsLoading = useSelector(selectLoading);
 
   return (

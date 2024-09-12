@@ -16,11 +16,26 @@ export const ProtectedRoute = ({
   const location = useLocation();
   const user = useSelector(getUser);
 
-  if (!user && !onlyUnAuth) return <Navigate replace to='/login' />;
+  if (!onlyUnAuth && !user) {
+    return (
+      <Navigate
+        replace
+        to='/login'
+        state={{
+          from: {
+            ...location,
+            background: location.state?.background,
+            state: null
+          }
+        }}
+      />
+    );
+  }
 
   if (onlyUnAuth && user) {
     const from = location.state?.from || { pathname: '/' };
-    return <Navigate replace to={from} />;
+    const background = location.state?.from?.background || null;
+    return <Navigate replace to={from} state={{ background }} />;
   }
 
   return children;

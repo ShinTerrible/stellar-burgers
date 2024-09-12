@@ -1,5 +1,5 @@
 import { ProfileUI } from '@ui-pages';
-import { FC, SyntheticEvent, useEffect, useState } from 'react';
+import { FC, SyntheticEvent, useEffect, useState, FormEvent } from 'react';
 import { useDispatch, useSelector } from '../../services/store';
 import {
   getIsAuthChecked,
@@ -8,7 +8,7 @@ import {
 } from '../../slices/user/userSlice';
 
 export const Profile: FC = () => {
-  /** TODO: взять переменную из стора */
+  
   const user = useSelector(getUser);
   const isAuth = useSelector(getIsAuthChecked);
   const dispatch = useDispatch();
@@ -33,12 +33,12 @@ export const Profile: FC = () => {
     !!formValue.password;
 
   // отправка данных на сервер при их изменении
-  const handleSubmit = (e: SyntheticEvent) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isFormChanged && isAuth) dispatch(updateUser(formValue));
   };
 
-  const handleCancel = (e: SyntheticEvent) => {
+  const handleCancel = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormValue({
       name: user?.name || '',
@@ -58,7 +58,7 @@ export const Profile: FC = () => {
     <ProfileUI
       formValue={formValue}
       isFormChanged={isFormChanged}
-      handleCancel={handleCancel}
+      handleCancel={handleCancel}  
       handleSubmit={handleSubmit}
       handleInputChange={handleInputChange}
     />

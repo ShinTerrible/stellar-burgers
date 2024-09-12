@@ -11,8 +11,6 @@ type Params = {
 };
 
 export const IngredientDetails: FC = () => {
-  /** TODO: взять переменную из стора */
-  // DONE
   const { id } = useParams<Params>();
 
   const ingredientData = useSelector(selectIngredients).find(

@@ -11,8 +11,7 @@ import orderInfoDataSelector from '../../services/selector/orderInfoSelector';
 type Params = { number: string };
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  // DONE
+
   const { number } = useParams<Params>();
   const dispatch = useDispatch();
 

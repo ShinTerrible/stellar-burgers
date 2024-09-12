@@ -57,6 +57,14 @@ function App() {
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
         <Route
+          path='/feed/:number'
+          element={
+            <ContentWithoutHistory>
+              <OrderInfo />
+            </ContentWithoutHistory>
+          }
+        />
+        <Route
           path='/login'
           element={
             <ProtectedRoute onlyUnAuth>
@@ -92,9 +100,7 @@ function App() {
           path='/profile'
           element={
             <ProtectedRoute>
-              <ContentWithoutHistory>
-                <Profile />
-              </ContentWithoutHistory>
+              <Profile />
             </ProtectedRoute>
           }
         />
@@ -105,7 +111,17 @@ function App() {
               <ProfileOrders />
             </ProtectedRoute>
           }
-        />{' '}
+        />
+        <Route
+          path='/profile/orders/:number'
+          element={
+            <ProtectedRoute>
+              <ContentWithoutHistory>
+                <OrderInfo />
+              </ContentWithoutHistory>
+            </ProtectedRoute>
+          }
+        />
         <Route
           path='/ingredients/:id'
           element={
@@ -123,7 +139,9 @@ function App() {
             path='/feed/:number'
             element={
               <Modal title='Детали заказа' onClose={onCloseModal}>
-                <OrderInfo />
+                <ContentWithoutHistory>
+                  <OrderInfo />
+                </ContentWithoutHistory>
               </Modal>
             }
           />
@@ -139,9 +157,11 @@ function App() {
             path='/profile/orders/:number'
             element={
               <ProtectedRoute>
-                <Modal title='Детали заказа' onClose={onCloseModal}>
-                  <OrderInfo />
-                </Modal>
+                <ContentWithoutHistory>
+                  <Modal title='Детали заказа' onClose={onCloseModal}>
+                    <OrderInfo />
+                  </Modal>
+                </ContentWithoutHistory>
               </ProtectedRoute>
             }
           />
