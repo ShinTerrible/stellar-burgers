@@ -38,3 +38,10 @@ export type TUser = {
 };
 
 export type TTabMode = 'bun' | 'sauce' | 'main';
+
+export const enum RequestStatus {
+  Idle = 'Idle', //запрос на сервер еще не ушел
+  Loading = 'Loading', //пользователь запросился
+  Success = 'Success', //запрос успешен
+  Faild = 'Failed' //ошибка запроса
+}
