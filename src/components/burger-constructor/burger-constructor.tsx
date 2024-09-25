@@ -16,7 +16,6 @@ import { useNavigate } from 'react-router-dom';
 import { getUser } from '../../slices/user/userSlice';
 
 export const BurgerConstructor: FC = () => {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

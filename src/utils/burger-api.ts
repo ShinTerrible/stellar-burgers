@@ -5,7 +5,7 @@ const URL = process.env.BURGER_API_URL;
 
 //TYPES
 
-type TIngredientsResponse = TServerResponse<{
+export type TIngredientsResponse = TServerResponse<{
   data: TIngredient[];
 }>;
 

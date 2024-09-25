@@ -7,7 +7,7 @@ const initialState: TOrderState = {
   orderByNumber: null,
   orderModalDataLoading: false,
   isOrderByNumberLoading: false,
-  error: null
+  error: undefined
 };
 
 //Thunks
@@ -42,22 +42,27 @@ export const orderSlice = createSlice({
     builder
       .addCase(getOrderByNumber.pending, (state) => {
         state.isOrderByNumberLoading = true;
-        state.error = null;
+        state.error = undefined;
       })
       .addCase(getOrderByNumber.fulfilled, (state, { payload }) => {
         state.orderByNumber = payload.orders[0];
         state.isOrderByNumberLoading = false;
-        state.error = null;
+        state.error = undefined;
       })
       .addCase(getOrderByNumber.rejected, (state, { error }) => {
         state.isOrderByNumberLoading = false;
-        state.error = error;
+        state.error = error.message;
       });
     //создать заказ по номеру
-    builder.addCase(createOrderBurger.fulfilled, (state, { payload }) => {
-      state.orderModalData = payload.order;
-      state.error = null;
-    });
+    builder
+      .addCase(createOrderBurger.pending, (state) => {
+        state.orderModalDataLoading = true;
+      })
+      .addCase(createOrderBurger.fulfilled, (state, { payload }) => {
+        state.orderModalData = payload.order;
+        state.error = undefined;
+        state.orderModalDataLoading = false;
+      });
   }
 });
 
@@ -72,3 +77,5 @@ export const {
 export const orderActions = orderSlice.actions;
 
 export default orderSlice.reducer;
+
+export const orderReducer = orderSlice.reducer;

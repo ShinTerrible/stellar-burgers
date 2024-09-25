@@ -7,3 +7,4 @@ export type TFeedState = {
   error: unknown | null;
   isLoading: boolean;
 };
+

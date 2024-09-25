@@ -4,12 +4,13 @@ import { feedsSlice } from '../slices//feeds/feedSlice';
 import { userSlice } from '../slices/user/userSlice';
 import { orderSlice } from '../slices/order/orderSlice';
 import { orderListSlice } from '../slices/orderList/orderListSlice';
+import { combineReducers } from '@reduxjs/toolkit';
 
-export const rootReducer = {
+export const rootReducer = combineReducers({
   [ingredientsSlice.name]: ingredientsSlice.reducer,
   [userSlice.name]: userSlice.reducer,
   [burgerSlice.name]: burgerSlice.reducer,
   [feedsSlice.name]: feedsSlice.reducer,
   [orderSlice.name]: orderSlice.reducer,
   [orderListSlice.name]: orderListSlice.reducer
-};
+});
