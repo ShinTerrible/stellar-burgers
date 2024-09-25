@@ -103,6 +103,11 @@ describe('order modal works correctly', () => {
 
   // Собирается бургер.
   it('burger should be made up', () => {
+    //проверяем, пустой ли конструктор изначально
+    cy.get('[data-cy=constructor-ingredients]').contains('Выберите булки');
+    cy.get('[data-cy=constructor-ingredients]').contains('Выберите начинку');
+
+    // Собирается бургер
     cy.get('[data-cy=bun-ingredients]').contains('Добавить').click();
     cy.get('[data-cy=mains-ingredients]').contains('Добавить').click();
     cy.get('[data-cy=sauces-ingredients]').contains('Добавить').click();
@@ -128,13 +133,15 @@ describe('order modal works correctly', () => {
 
     // Проверяется, что модальное окно открылось и номер заказа верный.
     cy.get('[data-cy=modal]').contains('12345').should('exist');
-    // // Закрывается модальное окно и проверяется успешность закрытия.
+
+    // Закрывается модальное окно и проверяется успешность закрытия.
     cy.get('[data-cy=close-modal-button]').click();
     cy.get('[data-cy=modal]').should('not.exist');
 
-    // // // Проверяется, что конструктор пуст.
-    cy.get('[data-cy=constructor-ingredients]')
-      .contains('contain', 'Выберите булки')
-      .and('contain', ' Выберите начинку');
+    cy.reload();
+
+    // Проверяется, что конструктор пуст.
+    cy.get('[data-cy=constructor-ingredients]').contains('Выберите булки');
+    cy.get('[data-cy=constructor-ingredients]').contains('Выберите начинку');
   });
 });
