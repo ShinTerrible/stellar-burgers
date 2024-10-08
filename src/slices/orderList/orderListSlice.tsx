@@ -45,3 +45,5 @@ export const { getOrderListSelector, getOrderListLoading } =
   orderListSlice.selectors;
 
 export default orderListSlice.reducer;
+
+export const orderListReducer = orderListSlice.reducer;

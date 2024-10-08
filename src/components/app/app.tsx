@@ -52,7 +52,6 @@ function App() {
   return (
     <div className={styles.app}>
       <AppHeader />
-      {/* location={background || location} */}
       <Routes location={background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />

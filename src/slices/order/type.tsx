@@ -6,5 +6,5 @@ export type TOrderState = {
   orderByNumber: TOrder | null;
   orderModalDataLoading: boolean;
   isOrderByNumberLoading: boolean;
-  error: SerializedError | null;
+  error: SerializedError | undefined | string;
 };

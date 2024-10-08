@@ -16,7 +16,6 @@ import { useNavigate } from 'react-router-dom';
 import { getUser } from '../../slices/user/userSlice';
 
 export const BurgerConstructor: FC = () => {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -42,7 +41,7 @@ export const BurgerConstructor: FC = () => {
 
   const closeOrderModal = () => {
     dispatch(orderActions.resetCreatedOrder());
-    navigate(-1);
+    navigate('/');
   };
 
   const price = useMemo(

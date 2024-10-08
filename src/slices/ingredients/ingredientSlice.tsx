@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getIngredientsApi } from '@api';
 import { IngredientState } from './type';
 
-const initialState: IngredientState = {
+export const initialState: IngredientState = {
   ingredients: [],
   loading: true,
   error: null
@@ -46,3 +46,5 @@ export const ingredientsSlice = createSlice({
 export const { selectIngredients, selectLoading } = ingredientsSlice.selectors;
 
 export default ingredientsSlice.reducer;
+
+export const ingredientsReducer = ingredientsSlice.reducer;

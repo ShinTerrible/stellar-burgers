@@ -5,13 +5,8 @@ import {
   registerUserApi,
   loginUserApi,
   logoutApi,
-  TRegisterData,
-  updateUserApi,
-  forgotPasswordApi,
-  resetPasswordApi
+  updateUserApi
 } from '@api';
-import { deleteCookie, getCookie, setCookie } from '../../utils/cookie';
-import { AppDispatch } from '../../services/store';
 
 //state
 const initialState: TUserState = {
@@ -66,25 +61,27 @@ export const userSlice = createSlice({
         state.error = null;
         state.isLoading = true;
       })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.error = action.error.message;
-        state.isAuthChecked = false;
-      })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.data = action.payload.user;
         state.isAuthChecked = true;
         state.isLoading = false;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.isAuthChecked = false;
       });
 
     //register
     builder
       .addCase(registerUser.pending, (state) => {
         state.error = null;
+        state.isLoading = true;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.error = null;
         state.data = action.payload.user;
         state.isAuthChecked = true;
+        state.isLoading = false;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.error = action.error.message;
@@ -129,3 +126,4 @@ export const userAction = {
 export const { getUser, getIsAuthChecked, getError } = userSlice.selectors;
 
 export default userSlice.reducer;
+export const userReducer = userSlice.reducer;

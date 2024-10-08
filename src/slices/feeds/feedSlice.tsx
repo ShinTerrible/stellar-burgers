@@ -39,13 +39,13 @@ export const feedsSlice = createSlice({
       })
       .addCase(getFeeds.rejected, (state, { error }) => {
         state.isLoading = false;
-        state.error = error;
+        state.error = error.message;
         // в случае ошибки мы сбрасываем флаг loading и записываем данные об ошибке в поле error;
       });
   }
 });
 
 export default feedsSlice.reducer;
-
+export const feedReducer = feedsSlice.reducer;
 export const { selectOrders, selectLoading, selectState } =
   feedsSlice.selectors;
